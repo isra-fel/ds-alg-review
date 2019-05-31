@@ -1,11 +1,13 @@
 import { quicksort } from './quicksort';
 import { SortAlgorism } from './sort.interface';
 import { insertionSort } from './insertion.sort';
+import { selectionSort } from './selection.sort';
+import { mergeSort } from './merge.sort';
 
 const testFactory = (algorism: SortAlgorism) => {
     return () => {
         function randNumber(): number {
-            return Math.floor(Math.random() * 10000);
+            return Math.floor(Math.random() * 1000);
         }
 
         function randArray(length: number): number[] {
@@ -21,7 +23,7 @@ const testFactory = (algorism: SortAlgorism) => {
         });
 
         it('should sort a long array', () => {
-            const arr = randArray(10000);
+            const arr = randArray(1000);
             const expected = [...arr].sort((x, y) => x - y);
             algorism(arr);
             expect(arr).toEqual(expected);
@@ -37,3 +39,5 @@ const testFactory = (algorism: SortAlgorism) => {
 
 describe('quick sort', testFactory(quicksort));
 describe('insertion sort', testFactory(insertionSort));
+describe('selection sort', testFactory(selectionSort));
+describe('merge sort', testFactory(mergeSort));
