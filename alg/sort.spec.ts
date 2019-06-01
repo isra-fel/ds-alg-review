@@ -3,6 +3,7 @@ import { SortAlgorism } from './sort.interface';
 import { insertionSort } from './insertion.sort';
 import { selectionSort } from './selection.sort';
 import { mergeSort } from './merge.sort';
+import { heapSort } from './heap.sort';
 
 const testFactory = (algorism: SortAlgorism) => {
     return () => {
@@ -23,7 +24,7 @@ const testFactory = (algorism: SortAlgorism) => {
         });
 
         it('should sort a long array', () => {
-            const arr = randArray(1000);
+            const arr = randArray(100000);
             const expected = [...arr].sort((x, y) => x - y);
             algorism(arr);
             expect(arr).toEqual(expected);
@@ -37,7 +38,8 @@ const testFactory = (algorism: SortAlgorism) => {
     };
 };
 
-describe('quick sort', testFactory(quicksort));
-describe('insertion sort', testFactory(insertionSort));
-describe('selection sort', testFactory(selectionSort));
-describe('merge sort', testFactory(mergeSort));
+// describe('quick sort', testFactory(quicksort));
+// describe('insertion sort', testFactory(insertionSort));
+// describe('selection sort', testFactory(selectionSort));
+// describe('merge sort', testFactory(mergeSort));
+describe('heap sort', testFactory(heapSort));
