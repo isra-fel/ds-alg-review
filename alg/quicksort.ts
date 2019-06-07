@@ -1,78 +1,40 @@
 import { SortAlgorism } from './sort.interface';
 
-export const quicksort: SortAlgorism = items => {
-    internalQuicksort(items, 0, items.length - 1);
+export const quickSort: SortAlgorism = items => {
+    function sort(left: number, right: number) {
+        if (left === right) {
+            return;
+        }
+        const pIndex = Math.floor((left + right) / 2);
+        const p = items[pIndex];
+
+        [items[pIndex], items[right]] = [items[right], p];
+
+        let i = left;
+        let j = right - 1;
+
+        while (i <= j) {
+            while (items[i] < p) {
+                ++i;
+            }
+            while (items[j] > p) {
+                --j;
+            }
+            if (i <= j) {
+                [items[i], items[j]] = [items[j], items[i]];
+                ++i;
+                --j;
+            }
+        }
+
+        [items[i], items[right]] = [p, items[i]];
+        if (left < j) {
+            sort(left, j);
+        }
+        if (i + 1 < right) {
+            sort(i + 1, right);
+        }
+    }
+
+    sort(0, items.length - 1);
 };
-
-function internalQuicksort(
-    items: number[],
-    firstIndex: number,
-    lastIndex: number
-): void {
-    function findPivotIndex(): number {
-        const first = items[firstIndex];
-        const midIndex = Math.floor((firstIndex + lastIndex) / 2);
-        const middle = items[midIndex];
-        const last = items[lastIndex];
-        if (first < middle) {
-            if (middle < last) {
-                return midIndex;
-            } else {
-                if (first < last) {
-                    return lastIndex;
-                } else {
-                    return firstIndex;
-                }
-            }
-        } else {
-            if (first < last) {
-                return firstIndex;
-            } else {
-                if (middle < last) {
-                    return midIndex;
-                } else {
-                    return lastIndex;
-                }
-            }
-        }
-    }
-
-    function swap(index1: number, index2: number) {
-        [items[index1], items[index2]] = [items[index2], items[index1]];
-    }
-
-    if (lastIndex === firstIndex) {
-        return;
-    }
-
-    const pivotIndex = findPivotIndex();
-    const pivot = items[pivotIndex];
-
-    swap(pivotIndex, lastIndex);
-
-    let i = firstIndex;
-    let j = lastIndex - 1;
-
-    while (i <= j) {
-        while (items[i] < pivot) {
-            ++i;
-        }
-        while (items[j] > pivot) {
-            --j;
-        }
-        if (i <= j) {
-            swap(i, j);
-            ++i;
-            --j;
-        }
-    }
-
-    swap(i, lastIndex);
-
-    if (firstIndex < j) {
-        internalQuicksort(items, firstIndex, j);
-    }
-    if (i < lastIndex) {
-        internalQuicksort(items, i + 1, lastIndex);
-    }
-}

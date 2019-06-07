@@ -1,4 +1,4 @@
-import { quicksort } from './quicksort';
+import { quickSort } from './quicksort';
 import { SortAlgorism } from './sort.interface';
 import { insertionSort } from './insertion.sort';
 import { selectionSort } from './selection.sort';
@@ -38,8 +38,8 @@ const testFactory = (algorism: SortAlgorism) => {
     };
 };
 
-// describe('quick sort', testFactory(quicksort));
+// describe('quick sort', testFactory(quickSort));
 // describe('insertion sort', testFactory(insertionSort));
 // describe('selection sort', testFactory(selectionSort));
-// describe('merge sort', testFactory(mergeSort));
-describe('heap sort', testFactory(heapSort));
+describe('merge sort', testFactory(mergeSort));
+// describe('heap sort', testFactory(heapSort));

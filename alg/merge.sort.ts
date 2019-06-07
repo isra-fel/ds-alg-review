@@ -1,7 +1,7 @@
 import { SortAlgorism } from './sort.interface';
 
 export const mergeSort: SortAlgorism = items => {
-    if (items.length === 1) {
+    if (items.length <= 1) {
         return;
     }
 
@@ -16,19 +16,15 @@ export const mergeSort: SortAlgorism = items => {
 };
 
 function merge(items1: number[], items2: number[]): number[] {
-    const newArray = [];
+    const m = [];
+
     while (items1.length && items2.length) {
-        if (items1[0] < items2[0]) {
-            newArray.push(items1.shift());
-        } else {
-            newArray.push(items2.shift());
-        }
+        m.push(items1[0] < items2[0] ? items1.shift() : items2.shift());
     }
-    while (items1.length) {
-        newArray.push(items1.shift());
+
+    if (items1.length) {
+        return [...m, ...items1];
+    } else {
+        return [...m, ...items2];
     }
-    while (items2.length) {
-        newArray.push(items2.shift());
-    }
-    return newArray;
 }

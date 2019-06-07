@@ -10,29 +10,39 @@ import { Heap } from './heap';
 // };
 
 export const heapSort: SortAlgorism = items => {
-    function down(i: number, size: number) {
-        const temp = items[i];
-        while (2 * i + 1 < size) {
-            let bigger = 2 * i + 1;
-            if (bigger + 1 < size && items[bigger + 1] > items[bigger]) {
-                bigger++;
-            }
-            if (items[bigger] > temp) {
-                items[i] = items[bigger];
-                i = bigger;
-            } else {
-                break;
-            }
+    let heapSize = items.length;
+
+    function buildHeap() {
+        for (let i = Math.floor(heapSize / 2) - 1; i >= 0; --i) {
+            down(i);
         }
-        items[i] = temp;
     }
 
-    for (let i = Math.floor(items.length / 2) - 1; i >= 0; --i) {
-        down(i, items.length);
+    function down(i: number) {
+        let child = 2 * i + 1;
+        if (child >= heapSize) {
+            return;
+        }
+        if (child + 1 < heapSize && items[child + 1] > items[child]) {
+            child++;
+        }
+        if (items[i] < items[child]) {
+            [items[i], items[child]] = [items[child], items[i]];
+            down(child);
+        }
     }
 
-    for (let i = items.length - 1; i > 0; --i) {
-        [items[0], items[i]] = [items[i], items[0]];
-        down(0, i);
+    function deleteMax(): number {
+        const max = items[0];
+        items[0] = items[heapSize - 1];
+        --heapSize;
+        down(0);
+        return max;
+    }
+
+    buildHeap();
+    while (heapSize > 0) {
+        const max = deleteMax();
+        items[heapSize] = max;
     }
 };
