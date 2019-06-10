@@ -41,5 +41,5 @@ const testFactory = (algorism: SortAlgorism) => {
 // describe('quick sort', testFactory(quickSort));
 // describe('insertion sort', testFactory(insertionSort));
 // describe('selection sort', testFactory(selectionSort));
-describe('merge sort', testFactory(mergeSort));
-// describe('heap sort', testFactory(heapSort));
+// describe('merge sort', testFactory(mergeSort));
+describe('heap sort', testFactory(heapSort));

@@ -2,14 +2,12 @@ import { SortAlgorism } from './sort.interface';
 
 export const quickSort: SortAlgorism = items => {
     function sort(left: number, right: number) {
-        if (left === right) {
+        if (left >= right) {
             return;
         }
         const pIndex = Math.floor((left + right) / 2);
         const p = items[pIndex];
-
-        [items[pIndex], items[right]] = [items[right], p];
-
+        swap(pIndex, right);
         let i = left;
         let j = right - 1;
 
@@ -21,19 +19,22 @@ export const quickSort: SortAlgorism = items => {
                 --j;
             }
             if (i <= j) {
-                [items[i], items[j]] = [items[j], items[i]];
+                swap(i, j);
                 ++i;
                 --j;
             }
         }
-
-        [items[i], items[right]] = [p, items[i]];
+        swap(i, right);
         if (left < j) {
             sort(left, j);
         }
         if (i + 1 < right) {
             sort(i + 1, right);
         }
+    }
+
+    function swap(i, j) {
+        [items[i], items[j]] = [items[j], items[i]];
     }
 
     sort(0, items.length - 1);
