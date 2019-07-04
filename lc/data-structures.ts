@@ -7,3 +7,11 @@ export class ListNode<T> {
         this.next = null;
     }
 }
+
+export interface TreeNode<T> {
+    val: T;
+    left: TreeNode<T>;
+    right: TreeNode<T>;
+}
+
+export type NumberTree = TreeNode<number>;

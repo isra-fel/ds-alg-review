@@ -1,5 +1,5 @@
 import { sortList, stepIn, NumberList, merge } from './sort-list-148';
-import { ListNodeHelper } from '../test-utils';
+import { ListNodeHelper } from './test-utils';
 import { ListNode } from './data-structures';
 
 describe('stepIn()', () => {

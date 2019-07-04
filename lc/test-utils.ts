@@ -1,4 +1,4 @@
-import { ListNode } from './lc/data-structures';
+import { ListNode, TreeNode } from './data-structures';
 
 export class ListNodeHelper {
     static getLengthOf(node: ListNode<any>): number {
@@ -60,6 +60,58 @@ export class ListNodeHelper {
             return curr;
         });
         return nodes[0];
+    }
+}
+
+export class TreeNodeHelper {
+    static deserialize<T>(array: T[]): TreeNode<T> {
+        if (!array.length) {
+            return null;
+        }
+        const nodes = array.map(val => (val === null ? null : this.leaf(val)));
+        const head = nodes.shift();
+        const parents = [head];
+
+        while (nodes.length) {
+            const parent = parents.shift();
+            const lChild = nodes.shift();
+            const rChild = nodes.shift();
+            if (lChild) {
+                parent.left = lChild;
+                parents.push(lChild);
+            }
+            if (rChild) {
+                parent.right = rChild;
+                parents.push(rChild);
+            }
+        }
+
+        return head;
+    }
+
+    static serialize<T>(tree: TreeNode<T>): T[] {
+        if (!tree) {
+            return [];
+        }
+        const result: T[] = [];
+        const bfs = [tree];
+        while (bfs.length) {
+            const node = bfs.shift();
+            result.push(node ? node.val : null);
+            if (node) {
+                bfs.push(node.left);
+                bfs.push(node.right);
+            }
+        }
+        // remove tailing null
+        while (result.length && result[result.length - 1] === null) {
+            result.pop();
+        }
+        return result;
+    }
+
+    static leaf<T>(val: T): TreeNode<T> {
+        return { val, left: null, right: null };
     }
 }
 
