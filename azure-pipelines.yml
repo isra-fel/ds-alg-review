@@ -14,13 +14,15 @@ steps:
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/test-*.xml'
-    failTaskOnFailedTests: true
 
 - script: |
     npm install
     npx jest
   displayName: 'npm install and test'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/test-*.xml'
+    failTaskOnFailedTests: true
+  displayName: 'Publish test results'
