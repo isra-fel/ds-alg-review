@@ -24,7 +24,7 @@ const testFactory = (algorism: SortAlgorism) => {
         });
 
         it('should sort a long array', () => {
-            const arr = randArray(100000);
+            const arr = randArray(100);
             const expected = [...arr].sort((x, y) => x - y);
             algorism(arr);
             expect(arr).toEqual(expected);

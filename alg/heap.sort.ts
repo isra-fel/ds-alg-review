@@ -1,5 +1,5 @@
 import { SortAlgorism } from './sort.interface';
-import { Heap } from './heap';
+// import { Heap } from './heap';
 
 // export const heapSort: SortAlgorism = items => {
 //     const heap = new Heap(items);
@@ -10,36 +10,41 @@ import { Heap } from './heap';
 // };
 
 export const heapSort: SortAlgorism = items => {
-    let heapSize = items.length;
-
-    for (let i = Math.floor(heapSize / 2) - 1; i >= 0; --i) {
-        down(i);
+    function buildHeap() {
+        for (let i = Math.floor(items.length / 2) - 1; i >= 0; --i) {
+            down(i, items.length);
+        }
     }
 
-    function down(i) {
-        const top = items[i];
-        while (2 * i + 1 < heapSize) {
-            let iChild = 2 * i + 1;
-            if (iChild + 1 < heapSize && items[iChild + 1] > items[iChild]) {
-                ++iChild;
+    function down(i: number, size: number) {
+        const target = items[i];
+        while (2 * i + 1 < size) {
+            let larger = 2 * i + 1;
+            if (larger + 1 < size && items[larger + 1] > items[larger]) {
+                ++larger;
             }
-
-            if (items[iChild] > top) {
-                items[i] = items[iChild];
-                i = iChild;
+            if (items[larger] > target) {
+                items[i] = items[larger];
+                i = larger;
             } else {
                 break;
             }
         }
-        items[i] = top;
+        items[i] = target;
     }
 
     function swap(i, j) {
         [items[i], items[j]] = [items[j], items[i]];
     }
 
-    while (heapSize > 1) {
-        swap(0, --heapSize);
-        down(0);
+    function sort() {
+        let size = items.length;
+        while (size) {
+            swap(0, --size);
+            down(0, size);
+        }
     }
+
+    buildHeap();
+    sort();
 };
